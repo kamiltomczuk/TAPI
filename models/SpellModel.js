@@ -1,7 +1,6 @@
-const { buildSchema } = require('graphql');
+import { buildSchema } from 'graphql';
 
-const schema = buildSchema(`
-  # Typ zaklęcia
+const spellSchema = `
   type Spell {
     id: ID!
     name: String!
@@ -11,7 +10,6 @@ const schema = buildSchema(`
     effect: String
   }
 
-  # Typ dla rodzajów zaklęć
   enum SpellType {
     CHARM
     CURSE
@@ -21,7 +19,6 @@ const schema = buildSchema(`
     OTHER
   }
 
-  # Typ poziomu trudności zaklęcia
   enum SpellLevel {
     EASY
     MEDIUM
@@ -29,11 +26,10 @@ const schema = buildSchema(`
     EXTREME
   }
 
-  # Query dla zaklęć
   type Query {
     spell(id: ID!): Spell
     spells: [Spell!]!
   }
-`);
+`;
 
-module.exports = schema;
+export default spellSchema;

@@ -1,15 +1,13 @@
-const { buildSchema } = require('graphql');
+import { buildSchema } from 'graphql';
 
-// Definiowanie schematu
-const schema = buildSchema(`
-  # Definicja typu Character
+const characterSchema = `
   type Character {
     id: ID!
     firstName: String!
-    lastName: String
+    lastName: String!
     fullName: String!
-    house: House
-    bloodStatus: BloodStatus
+    house: String
+    bloodStatus: String
     wand: Wand
     patronus: String
     isDeathEater: Boolean
@@ -18,32 +16,16 @@ const schema = buildSchema(`
     birthDate: String
     deathDate: String
     ancestry: String
-    skills: [Skill!]!
-    magicalCreaturesInteracted: [MagicalCreature!]!
-    friends: [Relationship!]!
-    enemies: [Relationship!]!
-    notableEvents: [Event!]!
-    favoriteSpells: [Spell!]!
-    affiliations: [Affiliation!]!
-    quotes: [Quote!]!
+    skills: [Skill]
+    magicalCreaturesInteracted: [MagicalCreature]
+    friends: [Relationship]
+    enemies: [Relationship]
+    notableEvents: [Event]
+    favoriteSpells: [Spell]
+    affiliations: [Affiliation]
+    quotes: [Quote]
   }
 
-  # Typ dla domu
-  enum House {
-    GRYFFINDOR
-    HUFFLEPUFF
-    RAVENCLAW
-    SLYTHERIN
-  }
-
-  # Typ dla statusu krwi czarodzieja
-  enum BloodStatus {
-    PUREBLOOD
-    HALF_BLOOD
-    MUGGLE_BORN
-  }
-
-  # Typ różdżki
   type Wand {
     wood: String
     core: String
@@ -51,7 +33,6 @@ const schema = buildSchema(`
     flexibility: String
   }
 
-  # Typ roli postaci
   enum Role {
     STUDENT
     TEACHER
@@ -62,14 +43,12 @@ const schema = buildSchema(`
     OTHER
   }
 
-  # Typ umiejętności
   type Skill {
     name: String!
     description: String
     proficiency: ProficiencyLevel
   }
 
-  # Typ poziomu zaawansowania w umiejętnościach
   enum ProficiencyLevel {
     NOVICE
     INTERMEDIATE
@@ -77,70 +56,38 @@ const schema = buildSchema(`
     MASTER
   }
 
-  # Typ dla magicznych stworzeń
   type MagicalCreature {
     name: String!
-    species: String!
+    species: String
     description: String
   }
 
-  # Typ relacji
   type Relationship {
-    character: Character!
-    relationshipType: RelationshipType!
+    character: Character
+    relationshipType: String
   }
 
-  # Typ relacji postaci
-  enum RelationshipType {
-    FRIEND
-    ENEMY
-    ALLY
-    RIVAL
-    FAMILY
-  }
-
-  # Typ wydarzeń
   type Event {
-    name: String!
+    name: String
     date: String
     description: String
   }
 
-  # Typ zaklęć
-  type Spell {
-    name: String!
-    type: SpellType
-    description: String
-  }
-
-  # Typ dla rodzajów zaklęć
-  enum SpellType {
-    CHARM
-    CURSE
-    HEX
-    JINX
-    TRANSFIGURATION
-    OTHER
-  }
-
-  # Typ afiliacji
   type Affiliation {
-    name: String!
+    name: String
     role: String
     description: String
   }
 
-  # Typ cytatów
   type Quote {
-    text: String!
+    text: String
     situation: String
   }
 
-  # Główne zapytania
   type Query {
     character(id: ID!): Character
     characters: [Character!]!
   }
-`);
+`;
 
-module.exports = schema;
+export default characterSchema;
