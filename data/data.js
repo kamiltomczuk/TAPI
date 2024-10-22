@@ -3,10 +3,15 @@ export const characters = [
     id: '1',
     firstName: 'Harry',
     lastName: 'Potter',
-    fullName: 'Harry Potter',
-    house: 'GRYFFINDOR',
-    bloodStatus: 'HALF_BLOOD',
-    wand: { wood: 'Holly', core: 'Phoenix feather', length: 11, flexibility: 'Supple' },
+    fullName: 'Harry James Potter',
+    house: 'Gryffindor',
+    bloodStatus: 'Half-blood',
+    wand: {
+      wood: 'Holly',
+      core: 'Phoenix feather',
+      length: 11,
+      flexibility: 'Supple'
+    },
     patronus: 'Stag',
     isDeathEater: false,
     isOrderMember: true,
@@ -14,14 +19,29 @@ export const characters = [
     birthDate: '1980-07-31',
     deathDate: null,
     ancestry: 'Half-blood',
-    skills: [{ name: 'Defense Against the Dark Arts', description: 'Proficient', proficiency: 'MASTER' }],
-    magicalCreaturesInteracted: [{ name: 'Hippogriff', species: 'Hippogriff', description: 'Buckbeak' }],
-    friends: [{ character: { id: '2', firstName: 'Ron', lastName: 'Weasley', fullName: 'Ron Weasley' }, relationshipType: 'FRIEND' }],
-    enemies: [{ character: { id: '3', firstName: 'Draco', lastName: 'Malfoy', fullName: 'Draco Malfoy' }, relationshipType: 'ENEMY' }],
-    notableEvents: [{ name: 'Battle of Hogwarts', date: '1998-05-02', description: 'Final battle against Voldemort' }],
-    favoriteSpells: ['1'], // Only spell IDs
-    affiliations: [{ name: 'Dumbledore\'s Army', role: 'Leader', description: 'Student organization' }],
-    quotes: [{ text: 'I solemnly swear that I am up to no good.', situation: 'Using the Marauder\'s Map' }]
+    skills: [
+      { name: 'Defense Against the Dark Arts', description: 'Proficient in defensive spells', proficiency: 'MASTER' }
+    ],
+    magicalCreaturesInteracted: [
+      { name: 'Hippogriff', species: 'Hippogriff', description: 'A magical creature with the front half of an eagle and the hind half of a horse' }
+    ],
+    friends: [
+      { character: { id: '2' }, relationshipType: 'Best Friend' },
+
+    ],
+    enemies: [
+      { character: { id: '2' }, relationshipType: 'Rival' }
+    ],
+    notableEvents: [
+      { name: 'Battle of Hogwarts', date: '1998-05-02', description: 'Final battle of the Second Wizarding War' }
+    ],
+    favoriteSpells: ['1', '2'],
+    affiliations: [
+      { name: 'Dumbledore\'s Army', role: 'Leader', description: 'A student organization founded by Harry Potter to oppose Dolores Umbridge' }
+    ],
+    quotes: [
+      { text: 'It’s wingardium leviOsa, not leviosAH.', situation: 'Teaching Ron the Levitation Charm' }
+    ]
   },
   {
     id: '2',

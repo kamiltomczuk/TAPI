@@ -1,5 +1,3 @@
-import { buildSchema } from 'graphql';
-
 const spellSchema = `
   type Spell {
     id: ID!

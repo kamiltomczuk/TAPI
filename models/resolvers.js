@@ -8,7 +8,27 @@ const resolvers = {
     spells: () => spells
   },
   Character: {
-    favoriteSpells: (character) => character.favoriteSpells.map(spellId => spells.find(spell => spell.id === spellId))
+    favoriteSpells: (character) => character.favoriteSpells.map(spellId => spells.find(spell => spell.id === spellId)),
+    friends: (character) => character.friends.map(friend => {
+      const friendCharacter = characters.find(c => c.id === friend.id);
+      return {
+        id: friendCharacter.id,
+        firstName: friendCharacter.firstName,
+        lastName: friendCharacter.lastName,
+        fullName: friendCharacter.fullName,
+        relationshipType: friend.relationshipType
+      };
+    }),
+    enemies: (character) => character.enemies.map(enemy => {
+      const enemyCharacter = characters.find(c => c.id === enemy.id);
+      return {
+        id: enemyCharacter.id,
+        firstName: enemyCharacter.firstName,
+        lastName: enemyCharacter.lastName,
+        fullName: enemyCharacter.fullName,
+        relationshipType: enemy.relationshipType
+      };
+    })
   }
 };
 

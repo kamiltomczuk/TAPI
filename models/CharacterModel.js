@@ -1,5 +1,3 @@
-import { buildSchema } from 'graphql';
-
 const characterSchema = `
   type Character {
     id: ID!
@@ -63,7 +61,7 @@ const characterSchema = `
   }
 
   type Relationship {
-    character: Character
+    id: ID!
     relationshipType: String
   }
 
