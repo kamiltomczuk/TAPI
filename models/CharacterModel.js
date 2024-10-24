@@ -63,6 +63,7 @@ const characterSchema = `
   type Relationship {
     id: ID!
     relationshipType: String
+    character: Character
   }
 
   type Event {
