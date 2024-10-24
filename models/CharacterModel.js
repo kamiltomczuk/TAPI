@@ -63,7 +63,14 @@ const characterSchema = `
   type Relationship {
     id: ID!
     relationshipType: String
-    character: Character
+    character: FriendEnemyCharacter
+  }
+
+  type FriendEnemyCharacter {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    fullName: String!
   }
 
   type Event {

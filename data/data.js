@@ -27,10 +27,10 @@ export const characters = [
     ],
     friends: [
       { character: { id: '2' }, relationshipType: 'Best Friend' },
-      { character: { id: '3' }, relationshipType: 'Best Friend' }
+      // { character: { id: '3' }, relationshipType: 'Best Friend' }
     ],
     enemies: [
-      // { character: { id: '2' }, relationshipType: 'Rival' }
+       { character: { id: '3' }, relationshipType: 'Rival' }
     ],
     notableEvents: [
       { name: 'Battle of Hogwarts', date: '1998-05-02', description: 'Final battle of the Second Wizarding War' }
