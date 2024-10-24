@@ -315,6 +315,70 @@ export const spells = [
     description: 'Unlocking Charm',
     level: 'EASY',
     effect: 'Unlocks doors'
+  },
+  {
+    id: '3',
+    name: 'Avada Kedavra',
+    type: 'CURSE',
+    description: 'Killing Curse',
+    level: 'EXTREME',
+    effect: 'Kills opponent'
+  },
+  {
+    id: '4',
+    name: 'Lumos',
+    type: 'CHARM',
+    description: 'Wand-Lighting Charm',
+    level: 'EASY',
+    effect: 'Illuminates wand tip'
+  },
+  {
+    id: '5',
+    name: 'Obliviate',
+    type: 'CHARM',
+    description: 'Memory Charm',
+    level: 'HARD',
+    effect: 'Erases memories'
+  },
+  {
+    id: '6',
+    name: 'Stupefy',
+    type: 'JINX',
+    description: 'Stunning Spell',
+    level: 'MEDIUM',
+    effect: 'Stuns opponent'
+  },
+  {
+    id: '7',
+    name: 'Wingardium Leviosa',
+    type: 'CHARM',
+    description: 'Levitation Charm',
+    level: 'EASY',
+    effect: 'Levitates objects'
+  },
+  {
+    id: '8',
+    name: 'Imperio',
+    type: 'CURSE',
+    description: 'Imperius Curse',
+    level: 'EXTREME',
+    effect: 'Controls opponent'
+  },
+  {
+    id: '9',
+    name: 'Crucio',
+    type: 'CURSE',
+    description: 'Cruciatus Curse',
+    level: 'EXTREME',
+    effect: 'Inflicts pain on opponent'
+  },
+  {
+    id: '10',
+    name: 'Confundo',
+    type: 'CHARM',
+    description: 'Confundus Charm',
+    level: 'MEDIUM',
+    effect: 'Confuses opponent'
   }
 ];
 

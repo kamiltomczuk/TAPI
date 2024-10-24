@@ -1,6 +1,6 @@
 import { GraphQLError } from 'graphql';
 
-const allowedFields = ['id', 'firstName', 'lastName', 'fullName'];
+const allowedFields = ['id', 'firstName', 'lastName', 'fullName', 'link'];
 
 export const validateFriendEnemyCharacterFields = (context) => {
   return {
@@ -12,7 +12,7 @@ export const validateFriendEnemyCharacterFields = (context) => {
           const disallowedFields = requestedFields.filter(field => !allowedFields.includes(field));
 
           if (disallowedFields.length > 0) {
-            context.reportError(new GraphQLError(`You can only query the id, firstName, lastName, and fullName of the friend or enemy character. Disallowed fields: ${disallowedFields.join(', ')}`, node));
+            context.reportError(new GraphQLError(`You can only query the id, firstName, lastName, fullName, and link of the friend or enemy character. Disallowed fields: ${disallowedFields.join(', ')}`, node));
             // Stop further validation for this node
             node.selectionSet.selections = node.selectionSet.selections.filter(selection => allowedFields.includes(selection.name.value));
           }

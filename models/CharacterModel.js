@@ -71,6 +71,7 @@ const characterSchema = `
     firstName: String!
     lastName: String!
     fullName: String!
+    link: String
   }
 
   type Event {

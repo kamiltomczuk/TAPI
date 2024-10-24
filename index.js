@@ -65,7 +65,6 @@ app.get('/characters', (req, res) => {
             enemies
         };
     });
-
     res.json(allCharacters);
 });
 
@@ -81,7 +80,8 @@ app.get('/character/:id', (req, res) => {
                     firstName: friendEnemyCharacter.firstName,
                     lastName: friendEnemyCharacter.lastName,
                     fullName: friendEnemyCharacter.fullName,
-                    relationshipType: friend.relationshipType
+                    relationshipType: friend.relationshipType,
+                    link: `/character/${friend.character.id}`
                 };
             } else {
                 return null;
@@ -95,19 +95,22 @@ app.get('/character/:id', (req, res) => {
                     firstName: enemyCharacter.firstName,
                     lastName: enemyCharacter.lastName,
                     fullName: enemyCharacter.fullName,
-                    relationshipType: enemy.relationshipType
+                    relationshipType: enemy.relationshipType,
+                    link: `/character/${enemy.character.id}`
                 };
             } else {
                 return null;
             }
         }).filter(enemy => enemy !== null);
 
-        res.json({
+        const characterWithLinks = {
             ...character,
             favoriteSpells,
             friends,
             enemies
-        });
+        };
+
+        res.json(characterWithLinks);
     } else {
         res.status(404).send('Character not found');
     }

@@ -19,7 +19,8 @@ const resolvers = {
             id: friendCharacter.id,
             firstName: friendCharacter.firstName,
             lastName: friendCharacter.lastName,
-            fullName: friendCharacter.fullName
+            fullName: friendCharacter.fullName,
+            link: `/character/${friendCharacter.id}`
           }
         };
       } else {
@@ -36,7 +37,8 @@ const resolvers = {
             id: enemyCharacter.id,
             firstName: enemyCharacter.firstName,
             lastName: enemyCharacter.lastName,
-            fullName: enemyCharacter.fullName
+            fullName: enemyCharacter.fullName,
+            link: `/character/${enemyCharacter.id}`
           }
         };
       } else {
