@@ -15,7 +15,7 @@ const characterSchema = `
     deathDate: String
     ancestry: String
     skills: [Skill]
-    magicalCreaturesInteracted: [MagicalCreature]
+    magicalCreatures: [CharacterCreatureRelationship]
     friends: [Relationship]
     enemies: [Relationship]
     notableEvents: [Event]
@@ -54,11 +54,24 @@ const characterSchema = `
     MASTER
   }
 
-  type MagicalCreature {
-    name: String!
-    species: String
-    description: String
+  type CharacterCreatureRelationship {
+    creature: Creature!
+    relationshipType: CreatureRelationType!
+    details: String
   }
+
+  enum CreatureRelationType {
+    COMPANION
+    FRIEND
+    ENEMY
+    GUARDIAN
+    SERVANT
+    FAMILIAR
+    STUDENT
+    MASTER
+  }
+
+  union RelatedEntity = Character | Creature
 
   type Relationship {
     id: ID!
