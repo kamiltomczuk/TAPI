@@ -1,6 +1,5 @@
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
-const { characters, creatures, spells } = require("../data/data.js");
 
 // Path to .proto file
 const PROTO_PATH = "./grpc/tapiService.proto";

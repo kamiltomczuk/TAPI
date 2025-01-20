@@ -49,6 +49,14 @@ message CharacterId {
   string id = 1;
 }
 
+message HouseQuery {
+  string house = 1;
+}
+
+message RoleQuery {
+  string role = 1;
+}
+
 message CharacterSearchQuery {
   string name = 1;
   string house = 2;
@@ -144,11 +152,6 @@ enum ProficiencyLevel {
   MASTER = 3;
 }
 
-message Relationship {
-  string id = 1;
-  string relationshipType = 2;
-  FriendEnemyCharacter character = 3;
-}
 
 message FriendEnemyCharacter {
   string id = 1;
@@ -156,6 +159,17 @@ message FriendEnemyCharacter {
   string lastName = 3;
   string fullName = 4;
   string link = 5;
+}
+
+message RelationshipList {
+  repeated Relationship relationships = 1;
+}
+
+message Relationship {
+  string id = 1;
+  string relationshipType = 2;
+  string details = 3;
+  FriendEnemyCharacter character = 4;
 }
 
 message Event {
@@ -175,11 +189,6 @@ message Quote {
   string situation = 2;
 }
 
-message Spell {
-  string name = 1;
-  string effect = 2;
-  string type = 3;
-}
 
 // Creature Messages
 message CreatureId {

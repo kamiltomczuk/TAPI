@@ -9,7 +9,10 @@ export const getAllCharacters = (req, res) => {
     links: {
       self: `/characters/${character.id}`,
       friendsOrEnemies: `/characters/${character.id}/relationships`,
+      friends: `/characters/${character.id}/friends`,
       enemies: `/characters/${character.id}/enemies`,
+      spells: `/characters/${char.id}/spells`,
+      magicalCreatures: `/characters/${character.id}/magicalCreatures`,
     },
   }));
   res.json(hateoasLinks);

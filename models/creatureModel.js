@@ -1,5 +1,45 @@
 // creatureModel.js
 const creatureSchema = `
+
+  input CreatureFilter {
+    name: StringFilter
+    species: StringFilter
+    dangerLevel: DangerLevel
+    habitat: StringFilter
+    alignment: CreatureAlignment
+    canTalk: Boolean
+    isProtected: Boolean
+  }
+
+  input CreatureInput {
+    name: String!
+    species: String!
+    description: String
+    dangerLevel: DangerLevel
+    habitat: String
+    abilities: [String]
+    isProtected: Boolean
+    canTalk: Boolean
+    alignment: CreatureAlignment
+  }
+
+  type CreatureConnection {
+    edges: [CreatureEdge!]!
+    pageInfo: PageInfo!
+    totalCount: Int!
+  }
+
+  type CreatureEdge {
+    node: Creature!
+    cursor: String!
+  }
+
+  type Mutation {
+    createCreature(creature: CreatureInput!): Creature
+    updateCreature(id: ID!, creature: CreatureInput!): Creature
+    deleteCreature(id: ID!): Boolean
+  }
+
   type Creature {
     id: ID!
     name: String!
@@ -47,8 +87,12 @@ const creatureSchema = `
 
   type Query {
     creature(id: ID!): Creature
-    creatures: [Creature!]!
-    creaturesByType(species: String!): [Creature!]!
+    creatures(
+      filter: CreatureFilter
+      sort: SortInput
+      page: Int = 1
+      pageSize: Int = 10
+    ): CreatureConnection!
   }
 `;
 

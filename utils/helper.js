@@ -27,7 +27,7 @@ export const formatCharacterRelationships = (character) => {
             species: creature.species,
             relationshipType: creatureRel.relationshipType,
             details: creatureRel.details,
-            link: `/creature/${creature.id}`,
+            link: `/creatures/${creature.id}`,
           };
         }
         return null;

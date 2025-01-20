@@ -17,6 +17,7 @@ import spellRoutes from "./routes/spellRoutes.js";
 import creatureRoutes from "./routes/creatureRoutes.js";
 
 const typeDefs = `
+  scalar Date
   ${characterSchema}
   ${spellSchema}
   ${creatureSchema}
