@@ -1,0 +1,274 @@
+syntax = "proto3";
+
+package tapi;
+
+// Character Service
+service CharacterService {
+  rpc GetAllCharacters (Empty) returns (CharacterList);
+  rpc GetCharacterById (CharacterId) returns (Character);
+  rpc SearchCharacters (CharacterSearchQuery) returns (CharacterList);
+  rpc CreateCharacter (NewCharacter) returns (Character);
+  rpc UpdateCharacter (Character) returns (Character);
+  rpc DeleteCharacter (CharacterId) returns (Empty);
+  rpc PatchCharacter (CharacterPatch) returns (Character);
+  rpc GetCharacterRelationships (CharacterId) returns (RelationshipList);
+  rpc GetCharacterByHouse (HouseQuery) returns (CharacterList);
+  rpc GetCharacterByRole (RoleQuery) returns (CharacterList);
+}
+
+// Creature Service
+service CreatureService {
+  rpc GetAllCreatures (Empty) returns (CreatureList);
+  rpc GetCreatureById (CreatureId) returns (Creature);
+  rpc SearchCreatures (CreatureSearchQuery) returns (CreatureList);
+  rpc CreateCreature (NewCreature) returns (Creature);
+  rpc UpdateCreature (Creature) returns (Creature);
+  rpc DeleteCreature (CreatureId) returns (Empty);
+  rpc PatchCreature (CreaturePatch) returns (Creature);
+  rpc GetCreatureByCharacterInteraction (CreatureId) returns (CreatureInteractions);
+}
+
+// Spell Service
+service SpellService {
+  rpc GetAllSpells (Empty) returns (SpellList);
+  rpc GetSpellById (SpellId) returns (Spell);
+  rpc SearchSpells (SpellSearchQuery) returns (SpellList);
+  rpc CreateSpell (NewSpell) returns (Spell);
+  rpc UpdateSpell (Spell) returns (Spell);
+  rpc DeleteSpell (SpellId) returns (Empty);
+  rpc PatchSpell (SpellPatch) returns (Spell);
+  rpc GetSpellByDifficulty (SpellDifficultyQuery) returns (SpellList);
+  rpc GetSpellByType (SpellTypeQuery) returns (SpellList);
+}
+
+// Shared Messages
+// Messages for Character Service
+message Empty {}
+
+message CharacterId {
+  string id = 1;
+}
+
+message CharacterSearchQuery {
+  string name = 1;
+  string house = 2;
+  string role = 3;
+}
+
+message NewCharacter {
+  string firstName = 1;
+  string lastName = 2;
+  string house = 3;
+  string bloodStatus = 4;
+  Wand wand = 5;
+  string patronus = 6;
+  bool isDeathEater = 7;
+  bool isOrderMember = 8;
+  string birthDate = 9;
+  string deathDate = 10;
+  string ancestry = 11;
+  repeated Skill skills = 12;
+  repeated Relationship magicalCreatures = 13;
+  repeated Relationship friends = 14;
+  repeated Relationship enemies = 15;
+  repeated Event notableEvents = 16;
+  repeated Spell favoriteSpells = 17;
+  repeated Affiliation affiliations = 18;
+  repeated Quote quotes = 19;
+}
+
+message Character {
+  string id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string fullName = 4;
+  string house = 5;
+  string bloodStatus = 6;
+  Wand wand = 7;
+  string patronus = 8;
+  bool isDeathEater = 9;
+  bool isOrderMember = 10;
+  Role role = 11;
+  string birthDate = 12;
+  string deathDate = 13;
+  string ancestry = 14;
+  repeated Skill skills = 15;
+  repeated Relationship magicalCreatures = 16;
+  repeated Relationship friends = 17;
+  repeated Relationship enemies = 18;
+  repeated Event notableEvents = 19;
+  repeated Spell favoriteSpells = 20;
+  repeated Affiliation affiliations = 21;
+  repeated Quote quotes = 22;
+}
+
+message CharacterList {
+  repeated Character characters = 1;
+}
+
+message CharacterPatch {
+  string id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string house = 4;
+  Role role = 5;
+}
+
+message Wand {
+  string wood = 1;
+  string core = 2;
+  float length = 3;
+  string flexibility = 4;
+}
+
+enum Role {
+  STUDENT = 0;
+  TEACHER = 1;
+  AUROR = 2;
+  MINISTER_OF_MAGIC = 3;
+  DEATH_EATER = 4;
+  ORDER_MEMBER = 5;
+  OTHER = 6;
+}
+
+message Skill {
+  string name = 1;
+  string description = 2;
+  ProficiencyLevel proficiency = 3;
+}
+
+enum ProficiencyLevel {
+  NOVICE = 0;
+  INTERMEDIATE = 1;
+  ADVANCED = 2;
+  MASTER = 3;
+}
+
+message Relationship {
+  string id = 1;
+  string relationshipType = 2;
+  FriendEnemyCharacter character = 3;
+}
+
+message FriendEnemyCharacter {
+  string id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string fullName = 4;
+  string link = 5;
+}
+
+message Event {
+  string name = 1;
+  string date = 2;
+  string description = 3;
+}
+
+message Affiliation {
+  string name = 1;
+  string role = 2;
+  string description = 3;
+}
+
+message Quote {
+  string text = 1;
+  string situation = 2;
+}
+
+message Spell {
+  string name = 1;
+  string effect = 2;
+  string type = 3;
+}
+
+// Creature Messages
+message CreatureId {
+  string id = 1;
+}
+
+message NewCreature {
+  string name = 1;
+  string species = 2;
+  string description = 3;
+  string dangerLevel = 4;
+  string alignment = 5;
+}
+
+message CreaturePatch {
+  string id = 1;
+  string name = 2;
+  string species = 3;
+}
+
+message CreatureList {
+  repeated Creature creatures = 1;
+}
+
+message Creature {
+  string id = 1;
+  string name = 2;
+  string species = 3;
+  string dangerLevel = 4;
+  string alignment = 5;
+}
+
+message CreatureSearchQuery {
+  string species = 1;
+  string dangerLevel = 2;
+  string alignment = 3;
+}
+
+message CreatureInteractions {
+  repeated Interaction interactions = 1;
+}
+
+message Interaction {
+  string characterId = 1;
+  string characterName = 2;
+  string type = 3;
+  string details = 4;
+}
+
+// Spell Messages
+message SpellId {
+  string id = 1;
+}
+
+message NewSpell {
+  string name = 1;
+  string type = 2;
+  string description = 3;
+  string level = 4;
+  string effect = 5;
+}
+
+message SpellPatch {
+  string id = 1;
+  string name = 2;
+  string type = 3;
+}
+
+message SpellList {
+  repeated Spell spells = 1;
+}
+
+message Spell {
+  string id = 1;
+  string name = 2;
+  string type = 3;
+  string level = 4;
+  string effect = 5;
+}
+
+message SpellSearchQuery {
+  string name = 1;
+  string effect = 2;
+}
+
+message SpellDifficultyQuery {
+  string level = 1;
+}
+
+message SpellTypeQuery {
+  string type = 1;
+}

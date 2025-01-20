@@ -83,7 +83,7 @@ export const getCreatureByCharacterInteraction = (req, res) => {
             firstName: char.firstName,
             lastName: char.lastName,
             fullName: char.fullName,
-            link: `/character/${char.id}`,
+            link: `/characters/${char.id}`,
           },
           type: mc.relationshipType,
           details: mc.details,

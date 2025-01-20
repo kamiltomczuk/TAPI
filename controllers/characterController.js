@@ -4,7 +4,15 @@ import { formatCharacterRelationships } from "../utils/helper.js";
 // Get all characters
 export const getAllCharacters = (req, res) => {
   const formattedCharacters = characters.map(formatCharacterRelationships);
-  res.json(formattedCharacters);
+  const hateoasLinks = formattedCharacters.map((character) => ({
+    ...character,
+    links: {
+      self: `/characters/${character.id}`,
+      friendsOrEnemies: `/characters/${character.id}/relationships`,
+      enemies: `/characters/${character.id}/enemies`,
+    },
+  }));
+  res.json(hateoasLinks);
 };
 
 export const getCharacterById = (req, res) => {
