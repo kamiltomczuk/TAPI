@@ -48,7 +48,7 @@ export const formatCharacterRelationships = (character) => {
             lastName: relatedCharacter.lastName,
             fullName: relatedCharacter.fullName,
             relationshipType: relation.relationshipType,
-            link: `/character/${relation.character.id}`,
+            link: `/characters/${relation.character.id}`,
             magicalCreatures: formatCreatures(relatedCharacter),
           };
         }

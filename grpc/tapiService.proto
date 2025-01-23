@@ -41,6 +41,8 @@ service SpellService {
   rpc GetSpellByType (SpellTypeQuery) returns (SpellList);
 }
 
+
+
 // Shared Messages
 // Messages for Character Service
 message Empty {}
@@ -80,7 +82,7 @@ message NewCharacter {
   repeated Relationship friends = 14;
   repeated Relationship enemies = 15;
   repeated Event notableEvents = 16;
-  repeated Spell favoriteSpells = 17;
+  repeated string favoriteSpells = 17;
   repeated Affiliation affiliations = 18;
   repeated Quote quotes = 19;
 }
@@ -108,6 +110,43 @@ message Character {
   repeated Spell favoriteSpells = 20;
   repeated Affiliation affiliations = 21;
   repeated Quote quotes = 22;
+}
+
+message CreatureRelation {
+  string id = 1;
+  string name = 2;
+  string species = 3;
+  string relationshipType = 4;
+  string details = 5;
+  string link = 6;
+}
+
+message CharacterRelation {
+  string id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string fullName = 4;
+  string relationshipType = 5;
+  string link = 6;
+}
+
+message SpellReference {
+  string id = 1;
+  string name = 2;
+  string type = 3;
+  string description = 4;
+  string level = 5;
+  string effect = 6;
+}
+
+message RelatedCharacter {
+  string id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string fullName = 4;
+  string relationshipType = 5;
+  string link = 6;
+  repeated Creature magicalCreatures = 7;
 }
 
 message CharacterList {
@@ -217,8 +256,9 @@ message Creature {
   string id = 1;
   string name = 2;
   string species = 3;
-  string dangerLevel = 4;
-  string alignment = 5;
+  string relationshipType = 4;
+  string dangerLevel = 5;
+  string alignment = 6;
 }
 
 message CreatureSearchQuery {
@@ -265,8 +305,9 @@ message Spell {
   string id = 1;
   string name = 2;
   string type = 3;
-  string level = 4;
-  string effect = 5;
+  string description = 4;
+  string level = 5;
+  string effect = 6;
 }
 
 message SpellSearchQuery {

@@ -11,7 +11,7 @@ export const getAllCharacters = (req, res) => {
       friendsOrEnemies: `/characters/${character.id}/relationships`,
       friends: `/characters/${character.id}/friends`,
       enemies: `/characters/${character.id}/enemies`,
-      spells: `/characters/${char.id}/spells`,
+      spells: `/characters/${character.id}/spells`,
       magicalCreatures: `/characters/${character.id}/magicalCreatures`,
     },
   }));
