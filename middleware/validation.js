@@ -60,8 +60,15 @@ export const validateSpellData = (req, res, next) => {
   const spell = req.body;
   const errors = [];
 
-  if (!spell.name) errors.push("name is required");
+  if (!spell.name?.trim()) errors.push("name is required and cannot be empty");
   if (!spell.type) errors.push("type is required");
+
+  if (spell.name && spell.name.length > 100) {
+    errors.push("name must be less than 100 characters");
+  }
+  if (spell.description && spell.description.length > 1000) {
+    errors.push("description must be less than 1000 characters");
+  }
 
   const validTypes = [
     "CHARM",

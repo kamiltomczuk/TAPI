@@ -2,21 +2,6 @@ const spellSchema = `
 
   scalar Date
 
-  input StringFilter {
-    eq: String
-    contains: String
-    notEq: String
-    notContains: String
-  }
-
-  input NumberFilter {
-    eq: Int
-    gt: Int
-    lt: Int
-    gte: Int
-    lte: Int
-  }
-
   input SpellFilter {
     name: StringFilter
     type: SpellType
@@ -30,16 +15,6 @@ const spellSchema = `
     description: String
     level: SpellLevel
     effect: String
-  }
-
-  input SortInput {
-    field: String!
-    order: SortOrder = ASC
-  }
-
-  enum SortOrder {
-    ASC
-    DESC
   }
 
 

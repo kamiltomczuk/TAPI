@@ -1,9 +1,27 @@
 openapi: 3.0.0
 info:
-  title: Harry Potter API
+  title: TAPI - Harry Potter Universe API
+  description: |
+    # TAPI Documentation
+    
+    API providing information about characters, spells, and magical creatures from Harry Potter universe.
+    
+    ## Features
+    - Character management
+    - Spell catalog
+    - Magical creatures database
+    
+    ## Technologies
+    - Node.js
+    - Express
+    - GraphQL
+    - gRPC
+    - REST API
+    
   version: 1.0.0
-  description: API for managing characters, magical creatures, and spells in the Harry Potter universe.
-
+  contact:
+    name: API Support
+    email: support@tapi.com
 servers:
   - url: http://localhost:3000
     description: Development server

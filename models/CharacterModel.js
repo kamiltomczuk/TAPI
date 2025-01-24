@@ -1,29 +1,6 @@
 const characterSchema = `
   scalar Date
 
-  input StringFilter {
-    eq: String
-    contains: String
-    notEq: String
-    notContains: String
-  }
-
-  input NumberFilter {
-    eq: Int
-    gt: Int
-    lt: Int
-    gte: Int
-    lte: Int
-  }
-
-  input DateFilter {
-    eq: Date
-    gt: Date
-    lt: Date
-    gte: Date
-    lte: Date
-  }
-
   input CharacterFilter {
     firstName: StringFilter
     lastName: StringFilter
@@ -32,11 +9,35 @@ const characterSchema = `
     role: Role
     isDeathEater: Boolean
     isOrderMember: Boolean
+    wand: WandFilter
+    patronus: StringFilter
+    birthDate: DateFilter
+    deathDate: DateFilter
+    skills: [SkillFilter]
+  }
+
+  input WandFilter {
+  wood: StringFilter
+  core: StringFilter
+  length: NumberFilter
+  flexibility: StringFilter
+}
+
+
+  type Query {
+    characters(
+      filter: CharacterFilter
+      sort: SortInput
+      page: Int = 1
+      pageSize: Int = 10
+    ): CharacterConnection!
+    character(id: ID!): Character
   }
 
   input CharacterInput {
     firstName: String!
     lastName: String!
+    fullName: String!
     house: String
     bloodStatus: String
     role: Role
@@ -55,15 +56,16 @@ const characterSchema = `
     flexibility: String
   }
 
+  
+  input SkillFilter {
+    name: StringFilter
+    proficiency: ProficiencyLevel
+  }
+
   input SkillInput {
     name: String!
     description: String
     proficiency: ProficiencyLevel
-  }
-
-  input SortInput {
-    field: String!
-    order: SortOrder = ASC
   }
 
   type CharacterConnection {
@@ -75,13 +77,6 @@ const characterSchema = `
   type CharacterEdge {
     node: Character!
     cursor: String!
-  }
-
-  type PageInfo {
-    hasNextPage: Boolean!
-    hasPreviousPage: Boolean!
-    startCursor: String
-    endCursor: String
   }
 
   type Mutation {

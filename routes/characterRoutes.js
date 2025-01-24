@@ -17,7 +17,7 @@ const router = express.Router();
 
 router.get("/", getAllCharacters);
 router.get("/search", searchCharacters);  // wywalic search
-router.get("/house/:houseName", getCharacterByHouse); //
+router.get("/house/:houseName", getCharacterByHouse);
 router.get("/:id", validateId, getCharacterById);
 router.post("/", validateCharacterData, createCharacter);
 router.put("/:id", validateId, validateCharacterData, updateCharacter);

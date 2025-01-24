@@ -19,9 +19,16 @@ router.get("/search", searchSpells);
 router.get("/:id", validateId, getSpellById);
 router.get("/level/:level", getSpellByDifficulty);
 router.get("/type/:type", getSpellByType);
+
+// POST/PUT/DELETE routes
 router.post("/", validateSpellData, createSpell);
 router.put("/:id", validateId, validateSpellData, updateSpell);
 router.delete("/:id", validateId, deleteSpell);
 router.patch("/:id", validateId, patchSpell);
+
+// Mutation routes
+router.post("/", validateSpellData, createSpell);
+router.put("/:id", validateId, validateSpellData, updateSpell);
+router.delete("/:id", validateId, deleteSpell);
 
 export default router;

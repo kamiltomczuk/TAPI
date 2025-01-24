@@ -2,39 +2,54 @@ import { characters, spells, creatures } from '../data/data.js';
 import { DateScalar } from '../customScalars.js';
 
 
-const applyFilters = (collection, filter) => {
-  if (!filter) return collection;
+const applyFilter = (value, filterValue) => {
+  if (!filterValue) return true;
+  
+  if (filterValue.eq !== undefined) {
+    return value === filterValue.eq;
+  }
+  if (filterValue.contains !== undefined) {
+    return String(value).toLowerCase().includes(String(filterValue.contains).toLowerCase());
+  }
+  if (filterValue.notEq !== undefined) {
+    return value !== filterValue.notEq;
+  }
+  if (filterValue.notContains !== undefined) {
+    return !String(value).toLowerCase().includes(String(filterValue.notContains).toLowerCase());
+  }
+  if (filterValue.gt !== undefined) {
+    return value > filterValue.gt;
+  }
+  if (filterValue.lt !== undefined) {
+    return value < filterValue.lt;
+  }
+  if (filterValue.gte !== undefined) {
+    return value >= filterValue.gte;
+  }
+  if (filterValue.lte !== undefined) {
+    return value <= filterValue.lte;
+  }
+  
+  return value === filterValue;
+};
 
-  return collection.filter(item => {
+const applyFilters = (items, filter) => {
+  if (!filter) return items;
+  
+  return items.filter(item => {
     return Object.entries(filter).every(([key, filterValue]) => {
-      if (!filterValue) return true;
+      const value = item[key];
       
-      if (filterValue.eq !== undefined) {
-        return item[key] === filterValue.eq;
-      }
-      if (filterValue.contains !== undefined) {
-        return item[key].includes(filterValue.contains);
-      }
-      if (filterValue.notEq !== undefined) {
-        return item[key] !== filterValue.notEq;
-      }
-      if (filterValue.notContains !== undefined) {
-        return !item[key].includes(filterValue.notContains);
-      }
-      if (filterValue.gt !== undefined) {
-        return item[key] > filterValue.gt;
-      }
-      if (filterValue.lt !== undefined) {
-        return item[key] < filterValue.lt;
-      }
-      if (filterValue.gte !== undefined) {
-        return item[key] >= filterValue.gte;
-      }
-      if (filterValue.lte !== undefined) {
-        return item[key] <= filterValue.lte;
+      if (typeof filterValue === 'object' && !Array.isArray(filterValue) && filterValue !== null) {
+        if (filterValue.eq !== undefined || filterValue.contains !== undefined || 
+            filterValue.gt !== undefined || filterValue.lt !== undefined || 
+            filterValue.gte !== undefined || filterValue.lte !== undefined) {
+          return applyFilter(value, filterValue);
+        }
+        return applyFilters([value], filterValue).length > 0;
       }
       
-      return item[key] === filterValue;
+      return applyFilter(value, filterValue);
     });
   });
 };
@@ -84,14 +99,50 @@ const resolvers = {
 
   Query: {
     // Character resolvers
-    character: (_, { id }) => characters.find(c => c.id === id),
-    characters: (_, { filter, sort, page, pageSize }) => {
-      let result = applyFilters(characters, filter);
-      result = applySorting(result, sort);
-      const totalCount = result.length;
-      result = applyPagination(result, page, pageSize);
-      return createConnection(result, page, pageSize, totalCount);
+    
+    characters: (_, { filter, sort, page = 1, pageSize = 10 }) => {
+      let filteredData = [...characters];
+      
+      if (filter) {
+        filteredData = applyFilters(filteredData, filter);
+      }
+
+      // Sortowanie
+      if (sort) {
+        filteredData = [...filteredData].sort((a, b) => {
+          const aValue = a[sort.field];
+          const bValue = b[sort.field];
+          const modifier = sort.order === 'DESC' ? -1 : 1;
+          
+          if (aValue < bValue) return -1 * modifier;
+          if (aValue > bValue) return 1 * modifier;
+          return 0;
+        });
+      }
+
+      // Paginacja
+      const totalCount = filteredData.length;
+      const startIndex = (page - 1) * pageSize;
+      const endIndex = startIndex + pageSize;
+      const pageData = filteredData.slice(startIndex, endIndex);
+
+      return {
+        edges: pageData.map(node => ({
+          node,
+          cursor: Buffer.from(node.id.toString()).toString('base64')
+        })),
+        pageInfo: {
+          hasNextPage: endIndex < totalCount,
+          hasPreviousPage: page > 1,
+          startCursor: pageData[0] ? 
+            Buffer.from(pageData[0].id.toString()).toString('base64') : null,
+          endCursor: pageData[pageData.length - 1] ? 
+            Buffer.from(pageData[pageData.length - 1].id.toString()).toString('base64') : null
+        },
+        totalCount
+      };
     },
+    character: (_, { id }) => characters.find(c => c.id === id),
 
     // Spell resolvers
     spell: (_, { id }) => spells.find(s => s.id === id),
@@ -117,9 +168,19 @@ const resolvers = {
   Mutation: {
     // Character mutations
     createCharacter: (_, { character }) => {
-      const newCharacter = { id: String(characters.length + 1), ...character };
-      characters.push(newCharacter);
-      return newCharacter;
+      const maxId = Math.max(...characters.map(c => parseInt(c.id, 10)), 0);
+      const newId = String(maxId + 1);
+      
+      // Konwertuj datę do odpowiedniego formatu
+      const formattedCharacter = {
+        ...character,
+        id: newId,
+        birthDate: character.birthDate ? new Date(character.birthDate).toISOString().split('T')[0] : null,
+        deathDate: character.deathDate ? new Date(character.deathDate).toISOString().split('T')[0] : null
+      };
+      
+      characters.push(formattedCharacter);
+      return formattedCharacter;
     },
     updateCharacter: (_, { id, character }) => {
       const index = characters.findIndex(c => c.id === id);
@@ -173,6 +234,14 @@ const resolvers = {
     },
   },
   Character: {
+    birthDate: (character) => {
+      if (!character.birthDate) return null;
+      return new Date(character.birthDate).toISOString().split('T')[0];
+    },
+    deathDate: (character) => {
+      if (!character.deathDate) return null;
+      return new Date(character.deathDate).toISOString().split('T')[0];
+    },
     favoriteSpells: (character) => character.favoriteSpells.map(spellId => spells.find(spell => spell.id === spellId)),
     friends: (character) => character.friends.map(friend => {
       const friendCharacter = characters.find(c => c.id === friend.character.id);

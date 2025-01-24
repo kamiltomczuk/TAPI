@@ -18,7 +18,12 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import protoLoader from '@grpc/proto-loader';
 import grpc from '@grpc/grpc-js';
-import { characters, creatures, spells } from './data/data.js';  // Dodaj ten import
+import { characters, creatures, spells } from './data/data.js';
+import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
+import { commonTypes } from "./models/commonTypes.js";
+
+const swaggerDocument = YAML.load('./docs/openapi.yaml');
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -38,7 +43,7 @@ const tapiProto = grpc.loadPackageDefinition(packageDefinition).tapi;
 
 const typeDefs = `
   scalar Date
-  
+  ${commonTypes}
   ${characterSchema}
   ${spellSchema}
   ${creatureSchema}
@@ -95,6 +100,7 @@ app.use(limiter); // Rate limiting
 app.use(requestLogger); // Custom request logging
 app.use(validateRequest); // Request validation
 app.use(errorHandler);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use("/characters", characterRoutes);
 app.use("/spells", spellRoutes);
